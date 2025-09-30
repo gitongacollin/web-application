@@ -2,10 +2,12 @@ from pyexpat.errors import messages
 
 from flask import Flask, render_template, request, redirect, url_for, flash
 import datetime
+import os
 
 app = Flask(__name__)
-app.secret_key = 'super secret key'
+app.secret_key = os.environ.get('SECRET_KEY', 'MySecretKey')
 
+"""In memory storage"""
 messages = []
 
 @app.route('/')
@@ -42,4 +44,7 @@ def clear():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=6546)
+    host = os.environ.get('IP', '0.0.0.0')
+    port = int(os.environ.get('PORT', 6546))
+    debug = os.environ.get('DEBUG', False)
+    app.run(debug=debug, host=host, port=port)
