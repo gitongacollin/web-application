@@ -7,11 +7,11 @@ terraform {
       version = "~> 5.9"
     }
   }
-  backend "s3" {
+  /*backend "s3" {
   bucket = "collin-web"
-  key = ""
+  key = "web-app/terraform.tfstate"
   region = "us-east-1"
-    }
+    }*/
 }
 provider "aws" {
   region = var.aws_region

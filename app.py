@@ -10,6 +10,10 @@ app.secret_key = os.environ.get('SECRET_KEY', 'MySecretKey')
 """In memory storage"""
 messages = []
 
+def get_time():
+    east = datetime.timezone(datetime.timedelta(hours=3))
+    return datetime.datetime.now(east)
+
 @app.route('/')
 def index():
     return render_template('index.html',
@@ -29,7 +33,7 @@ def add_message():
         messages.append({
             'message':message,
             'name':name,
-            'time':datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+            'time':get_time().strftime('%d/%m/%Y %H:%M:%S')
         })
         flash('Message added successfully!', category='success')
     else:

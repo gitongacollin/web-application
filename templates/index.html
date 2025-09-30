@@ -4,8 +4,7 @@
 
 {% block content %}
 <div class="hero">
-    <h2>Welcome to the Web App</h2>
-    <p>Current time: {{ current_time.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    <h2>Collin</h2>
 </div>
 
 <div class="content-section">
@@ -31,7 +30,7 @@
                 <div class="message-card">
                     <div class="message-header">
                         <strong>{{ msg.name }}</strong>
-                        <span class="timestamp">{{ msg.timestamp }}</span>
+                        <span class="timestamp">{{ msg.time }}</span>
                     </div>
                     <p class="message-content">{{ msg.message }}</p>
                 </div>

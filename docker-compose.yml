@@ -1,10 +1,24 @@
 version: '3.8'
+networks:
+  giitonga:
+    driver: bridge
 
 services:
   web:
     build: .
     ports:
-      - "6546:6546"
+      - "6546"
     environment:
       - FLASK_ENV=production
+    restart: unless-stopped
+
+  proxy:
+    image: haproxy:3.2.5-alpine
+    depends_on:
+      - web
+    ports:
+      - "5050:80"
+      - "8404:8404"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     restart: unless-stopped
