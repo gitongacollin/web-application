@@ -44,7 +44,7 @@ def clear():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    host = os.environ.get('IP', '0.0.0.0')
-    port = int(os.environ.get('PORT', 6546))
-    debug = os.environ.get('DEBUG', False)
+    host = os.environ.get('FLASK_HOST', '0.0.0.0')
+    port = int(os.environ.get('FLASK_PORT', 6546))
+    debug = os.environ.get('FLASK_DEBUG', False)
     app.run(debug=debug, host=host, port=port)
