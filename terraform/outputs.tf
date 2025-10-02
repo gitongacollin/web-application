@@ -1,6 +1,6 @@
 output "instance_public_ip" {
-  value       = aws_eip.webapp.public_ip                    # The actual value to be outputted
-  description = "The public IP address of the EC2 instance" # Description of what this output represents
+  value       = aws_eip.webapp.public_ip
+  description = "The public IP address of the EC2 instance"
 }
 
 output "instance_id" {
@@ -10,8 +10,4 @@ output "instance_id" {
 
 output "vpc_id" {
   value = aws_vpc.main.id
-}
-
-output "url" {
-  value = "http://${aws_eip.webapp.public_ip}"
 }

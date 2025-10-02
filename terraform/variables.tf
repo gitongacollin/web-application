@@ -36,7 +36,7 @@ variable "key_name" {
 
 variable "instance_type" {
   type        = string
-  default     = "t2.micro"
+  default     = "t3.micro"
   description = "The type of EC2 instance"
 }
 
