@@ -1,0 +1,64 @@
+name: Deployment
+
+permissions:
+  packages: write
+  pull-requests: read
+  deployments: write
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  tagging:
+    runs-on: ubuntu-24
+    steps:
+      - name: Generate tag
+        id: tag
+        run: |
+          TAG_DATE=$(date +%d%m%Y%H%M)
+          echo "TAG_DATE=$TAG_DATE" >> $GITHUB_ENV
+          echo "tag_date=$TAG_DATE" >> $GITHUB_OUTPUT
+
+    outputs:
+      tag_date: ${{ steps.tag.outputs.tag_date }}
+  build:
+    needs: tagging
+    runs-on: ubuntu-24
+    environment: Production
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - dockerfile: .Dockerfile
+            image: ghcr.io/gitongacollin/web-app
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: gchr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ matrix.dockerfile }}
+          tags: type=raw, value=${{ needs.tagging.outputs.tag_date }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: {{ steps.meta.outputs.tags}}
+
