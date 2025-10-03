@@ -51,7 +51,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ matrix.dockerfile }}
+          images: ${{ matrix.image }}
           tags: type=raw,value=${{ needs.tagging.outputs.tag_date }}
 
       - name: Build and push Docker image
