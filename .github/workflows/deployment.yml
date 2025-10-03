@@ -52,7 +52,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ matrix.dockerfile }}
-          tags: type=raw, value=${{ needs.tagging.outputs.tag_date }}
+          tags: type=raw,value=${{ needs.tagging.outputs.tag_date }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
