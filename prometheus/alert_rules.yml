@@ -1,0 +1,44 @@
+groups:
+  - name: web_app_alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 3m
+        labels:
+          severity: warning
+          service: web-app
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage is above 80% for more than 3 minutes"
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 3m
+        labels:
+          service: web-app
+          severity: warning
+        annotations:
+          description: "Memory Usage is above 85% for 3 minutes"
+          summary: "High Memory usage on {{ $labels.instance }}"
+
+      - alert: LowDiskSpace
+        expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100 > 80
+        for: 3m
+        labels:
+          severity: warning
+          service: web-app
+        annotations:
+          description: "Disk Utilization is above 80% on {{ $labels.device }}"
+          summary: "Low disk space on {{ $labels.instance }}"
+
+  - name: container_alerts
+    rules:
+      - alert: ContainerFrequentlyRestarting
+        expr: rate(container_restarts_total{name=~".*web.*"}[10m]) > 0.1
+        for: 2m
+        labels:
+          severity: warning
+          service: Infra
+        annotations:
+          summary: "Container frequently restarting: {{ $labels.name }}"
+          description: "Container {{ $labels.name }} is restarting frequently"
