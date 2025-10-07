@@ -19,7 +19,7 @@ resource "aws_key_pair" "web_app_key" {
   tags = {
     Project     = var.project_name
     Environment = var.environment
-    Terraform = "true"
+    Terraform   = "true"
   }
 }
 
@@ -32,7 +32,7 @@ resource "aws_vpc" "main" {
     Name        = "${var.project_name}-vpc"
     Environment = var.environment
     Project     = var.project_name
-    Terraform = "true"
+    Terraform   = "true"
   }
 }
 
@@ -42,7 +42,7 @@ resource "aws_internet_gateway" "main" {
   tags = {
     Name        = "${var.project_name}-igw"
     Environment = var.environment
-    Terraform = "true"
+    Terraform   = "true"
   }
 }
 
@@ -54,9 +54,9 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name       = "${var.project_name}-public-subnet-${count.index + 1}"
+    Name        = "${var.project_name}-public-subnet-${count.index + 1}"
     Environment = var.environment
-    Terraform = "true"
+    Terraform   = "true"
   }
 }
 
@@ -71,7 +71,7 @@ resource "aws_route_table" "public" {
   tags = {
     Name        = "${var.project_name}-public-rt"
     Environment = var.environment
-    Terraform = "true"
+    Terraform   = "true"
   }
 }
 
@@ -120,7 +120,7 @@ resource "aws_eip" "webapp" {
   tags = {
     Name        = "${var.project_name}-eip"
     Environment = var.environment
-    Terraform = "true"
+    Terraform   = "true"
   }
 }
 
@@ -150,7 +150,7 @@ resource "aws_instance" "webapp" {
     Name        = "${var.project_name}-ec2"
     Environment = var.environment
     Project     = var.project_name
-    Terraform = "true"
+    Terraform   = "true"
   }
 
   depends_on = [aws_internet_gateway.main]
