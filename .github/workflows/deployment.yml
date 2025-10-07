@@ -87,6 +87,7 @@ jobs:
           FLASK_PORT=${{ secrets.FLASK_PORT }}
           FLASK_HOST=${{ secrets.FLASK_HOST }}
           FLASK_DEBUG=${{ secrets.FLASK_DEBUG }}
+          TAG_DATE=${{ needs.tagging.outputs.tag_date }}
           SLACK_WEBHOOK_URL=${{ secrets.SLACK_WEBHOOK_URL }}
           EOF
       - name: Copy files to server via SCP

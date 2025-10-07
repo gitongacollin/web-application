@@ -10,7 +10,7 @@ volumes:
 
 services:
   web:
-    image: ghcr.io/gitongacollin/web-app:031020251346
+    image: ghcr.io/gitongacollin/web-app:${TAG_DATE}
     ports:
       - "6546"
     environment:
