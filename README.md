@@ -38,3 +38,6 @@ Implementation of monitoring by use of prometheus and grafana. The following met
 2. Message persistence on container restart as there is no DB currently
 3. Dynamic SSH key generation
 4. Terraform state persistence in CI/CD
+
+### Pipeline Diagram
+![Deployment Pipeline](./.github/workflows/deployment-pipeline.drawio.svg)
